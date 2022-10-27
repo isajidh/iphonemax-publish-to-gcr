@@ -33,13 +33,15 @@ jobs:
           cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/iphonemaxcitest:buildcache
           cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/iphonemaxcitest:buildcache,mode=max
 
-      - name: 5 Push to GitHub Container Registry
-        uses: actions/checkout@v3
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GHCR_PAT }}
+
       - name: Build the iphonemax-publish-to-gcr Docker image
         run: |
-          echo $GHCR_PAT | docker login ghcr.io -u isajidh --password-stdin
-        env:
-          GHCR_PAT: ${{ secrets.GHCR_PAT }}
-        docker build . --tag ghcr.io/isajidh/iphonemax-publish-to-gcr:latest
-        docker run ghcr.io/isajidh/iphonemax-publish-to-gcr:latest
-        docker push ghcr.io/isajidh/iphonemax-publish-to-gcr:latest
+          docker build . --tag ghcr.io/isajidh/iphonemax-publish-to-gcr:latest
+          docker run ghcr.io/isajidh/iphonemax-publish-to-gcr:latest
+          docker push ghcr.io/isajidh/iphonemax-publish-to-gcr:latest
