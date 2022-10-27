@@ -1,4 +1,4 @@
-name: iphonemaxci
+name: Push to Docker Hub
 on:
   push:
     branches:
@@ -11,21 +11,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout access to github repo
-        uses: actions/checkout@v3
-
       - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: ./
           file: ./Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/iphonemaxcitest:latest1
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/iphonemaxcitest:latest
+          cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/iphonemaxcitest:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/iphonemaxcitest:buildcache,mode=max
