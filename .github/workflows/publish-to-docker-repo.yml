@@ -34,7 +34,7 @@ jobs:
           cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/iphonemaxcitest:buildcache,mode=max
 
       - name: 5 Push to GitHub Container Registry
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
       - name: Build the iphonemax-publish-to-gcr Docker image
         run: |
           echo $GHCR_PAT | docker login ghcr.io -u isajidh --password-stdin
