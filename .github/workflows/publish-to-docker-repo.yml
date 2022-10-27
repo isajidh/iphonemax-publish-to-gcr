@@ -1,4 +1,4 @@
-name: Push to Docker Hub then to GHCR
+name: Push to Docker Hub then to GHCR test
 on:
   push:
     branches:
