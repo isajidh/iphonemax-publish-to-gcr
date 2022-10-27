@@ -4,7 +4,7 @@ on:
         branches:
             - "master"
         tags:
-            - "ghcr*"
+            - "v*"
 jobs:
     publish-hello-docker-image:
         runs-on: ubuntu-latest
