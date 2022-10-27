@@ -1,8 +1,0 @@
-version:/app/v1
-kind:deployment
-spec:
-  metadata:
-
-  spec:
-    template:
-    
