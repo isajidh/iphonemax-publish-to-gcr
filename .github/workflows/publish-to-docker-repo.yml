@@ -1,0 +1,39 @@
+name: iphonemaxci-dr
+on:
+  push:
+    branches:
+      - "master"
+    tags:
+      - "v*"
+  # pull_request:
+  #   branches:
+  #     - "master"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: ./
+          file: ./Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/iphonemaxcitest:latest
+          cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/iphonemaxcitest:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/iphonemaxcitest:buildcache,mode=max
+
+      # - if: github.event_name != 'pull_request'
+      #   uses: docker/login-action@v2
+      #   with:
+      #     registry: ghcr.io
+      #     username: ${{ github.actor }}
+      #     password: ${{ secrets.GITHUB_TOKEN }}
