@@ -42,6 +42,6 @@ jobs:
 
       - name: Build the iphonemax-publish-to-gcr Docker image
         run: |
-          docker build . --tag ghcr.io/isajidh/iphonemax-publish-to-gcr:$(date +%s)
-          docker run ghcr.io/isajidh/iphonemax-publish-to-gcr:$(date +%s)
-          docker push ghcr.io/isajidh/iphonemax-publish-to-gcr:$(date +%s)
+          docker build . --tag ghcr.io/isajidh/iphonemax-publish-to-gcr:latest
+          docker run ghcr.io/isajidh/iphonemax-publish-to-gcr:latest
+          docker push ghcr.io/isajidh/iphonemax-publish-to-gcr:latest
