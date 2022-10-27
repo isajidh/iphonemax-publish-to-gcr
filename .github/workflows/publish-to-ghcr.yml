@@ -7,7 +7,7 @@ on:
             - "v*"
 
 jobs:
-    publish-hello-docker-image:
+    build:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
