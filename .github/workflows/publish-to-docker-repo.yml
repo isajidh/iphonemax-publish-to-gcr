@@ -29,7 +29,7 @@ jobs:
           file: ./Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/iphonemaxcitest:$(date +%s)
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/iphonemaxcitest:latest
           cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/iphonemaxcitest:buildcache
           cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/iphonemaxcitest:buildcache,mode=max
 
